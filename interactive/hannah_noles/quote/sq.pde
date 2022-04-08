@@ -22,7 +22,7 @@ class sq
   void change()
   {
     float op =  alpha(this.c);
-    op = op+random(5);
+    op = op+random(2);
     if(op>255) op=255;
     
     this.c = color(0,0,0,op);
