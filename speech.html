@@ -1,0 +1,35 @@
+<html>
+<head>
+<style>
+  body{background:#000;}
+  div.balls{position:fixed; top:50%; left:50%;
+    animation: rot 5s linear 0s infinite;
+  }
+  div.ball{position:absolute; background:#fff; width:8vh; height:8vh; border-radius:50%;}
+  div.a1{transform:rotate(0deg) translate(0,20vh);}
+  div.a2{transform:rotate(60deg) translate(0,20vh);}
+  div.a3{transform: rotate(120deg) translate(0,20vh);}
+  div.a4{transform: rotate(180deg) translate(0,20vh);}
+  div.a5{transform: rotate(240deg) translate(0,20vh);}
+  div.a6{transform: rotate(300deg) translate(0,20vh);}
+
+  @keyframes rot{
+    0% {transform:rotate(0deg) translate(-50%,-50%);}
+    100% {transform:rotate(360deg) translate(-50%,-50%);}
+  }
+
+</style>
+</head>
+<body>
+
+<div class="balls">
+  <div class="ball a1"></div>
+  <div class="ball a2" style="transform:rotate(60deg) translate(0,20vh) scale(1.2);"></div>
+  <div class="ball a3"></div>
+  <div class="ball a4"></div>
+  <div class="ball a5"></div>
+  <div class="ball a6"></div>
+</div>
+
+</body>
+</html>
