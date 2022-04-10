@@ -21,13 +21,13 @@ class dcurve
  
  void show()
  {
-   fill(0);
-   noStroke();
-   beginShape();  
+   pg.fill(0);
+   pg.noStroke();
+   pg.beginShape();  
    for(int i = 0; i<c; i++)
    {
-     vertex(curves[i].get(0),curves[i].get(1));
-     bezierVertex(
+     pg.vertex(curves[i].get(0),curves[i].get(1));
+     pg.bezierVertex(
        curves[i].get(2),
        curves[i].get(3),
        curves[i].get(4),
@@ -36,17 +36,17 @@ class dcurve
        curves[i].get(7)
      );     
    }
-   endShape();   
+   pg.endShape();   
  }
  
  void test()
  {
    for(int i = 0; i<c; i++)
    {
-     noFill();
-     stroke(color(0,0,100,110));
-     strokeWeight(2);
-     bezier(
+     pg.noFill();
+     pg.stroke(color(0,0,100,110));
+     pg.strokeWeight(2);
+     pg.bezier(
        curves[i].get(0),
        curves[i].get(1),
        curves[i].get(2),
@@ -56,17 +56,17 @@ class dcurve
        curves[i].get(6),
        curves[i].get(7)
      );
-     noStroke();
-     fill(color(0,0,100,110));
-     ellipse(curves[i].get(0),curves[i].get(1),12,12);
-     ellipse(curves[i].get(6),curves[i].get(7),12,12);
-     fill(color(100,0,0,110));
-     ellipse(curves[i].get(2),curves[i].get(3),12,12);
-     ellipse(curves[i].get(4),curves[i].get(5),12,12);
-     stroke(color(100,0,0));
-     strokeWeight(1);
-     line(curves[i].get(0),curves[i].get(1),curves[i].get(2),curves[i].get(3));
-     line(curves[i].get(4),curves[i].get(5),curves[i].get(6),curves[i].get(7));
+     pg.noStroke();
+     pg.fill(color(0,0,100,110));
+     pg.ellipse(curves[i].get(0),curves[i].get(1),12,12);
+     pg.ellipse(curves[i].get(6),curves[i].get(7),12,12);
+     pg.fill(color(100,0,0,110));
+     pg.ellipse(curves[i].get(2),curves[i].get(3),12,12);
+     pg.ellipse(curves[i].get(4),curves[i].get(5),12,12);
+     pg.stroke(color(100,0,0));
+     pg.strokeWeight(1);
+     pg.line(curves[i].get(0),curves[i].get(1),curves[i].get(2),curves[i].get(3));
+     pg.line(curves[i].get(4),curves[i].get(5),curves[i].get(6),curves[i].get(7));
    }
  }
  
