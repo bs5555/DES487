@@ -8,12 +8,13 @@ var counter = 0;
 
 
 function setup() {
-  // use full screen size 
-  createCanvas(1500,1000);
-  background(0);
+  // use full screen size
+  fullscreen(true);
+  createCanvas(windowWidth,windowHeight);
+  background(color(12,12,12));
   smooth();
   cursor(CROSS);
- 
+
   x = mouseX;
   y = mouseY;
 
@@ -23,6 +24,7 @@ function setup() {
 }
 
 function draw() {
+  background(color(0,0,0,10));
   if (mouseIsPressed) {
     var d = dist(x,y, mouseX,mouseY);
     textFont('Baskerville');
@@ -32,7 +34,7 @@ function draw() {
     stepSize = textWidth(newLetter);
 
     if (d > stepSize) {
-      var angle = atan2(mouseY-y, mouseX-x); 
+      var angle = atan2(mouseY-y, mouseX-x);
 
       push();
       translate(x, y);
@@ -44,7 +46,7 @@ function draw() {
      if (counter > letters.length-1) counter = 0;
 
       x = x + cos(angle) * stepSize;
-      y = y + sin(angle) * stepSize; 
+      y = y + sin(angle) * stepSize;
     }
   }
 }
@@ -59,8 +61,8 @@ function keyTyped() {
 }
 
 function keyPressed() {
-  // angleDistortion ctrls arrowkeys up/down 
+  // angleDistortion ctrls arrowkeys up/down
   if (keyCode == DELETE || keyCode == BACKSPACE) background(255);
   if (keyCode == UP_ARROW) angleDistortion += 0.1;
-  if (keyCode == DOWN_ARROW) angleDistortion -= 0.1; 
+  if (keyCode == DOWN_ARROW) angleDistortion -= 0.1;
 }

@@ -5,7 +5,8 @@ int numFrames = 12;
 int currentFrame = 0;
 PImage[] images = new PImage[numFrames];
 
-void setup() {
+void setup() 
+{
   size(1280,960);
   myMovie = new Movie(this, "bubbles.mov");
   myMovie.loop();
@@ -16,15 +17,16 @@ void setup() {
   textFont(createFont("Effra_Std_Rg.ttf", 36));
 }
 
-void draw() {
+void draw() 
+{
 textAlign(CENTER, CENTER);
 line(0, 850, width, 600);
 text("TODAY I AM FEELING ________________", 850, 600);
    
-   rect(900, 575, 250, 25);
+rect(900, 575, 250, 25);
    
-    tint(255, 20);
-  image(myMovie, 0, 0);
+tint(255, 20);
+image(myMovie, 0, 0);
 }
 
 void movieEvent(Movie m) {
