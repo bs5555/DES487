@@ -32,7 +32,6 @@ class sq
   {
     if(mx > this.px && mx < this.px+this.w && my > this.py && my < this.py+this.h)
     {
-      println("clicked");
       this.c = color(0,0,0,1);
     }
   }

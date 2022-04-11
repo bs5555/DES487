@@ -2,6 +2,9 @@ sq[] square = new sq[10000];
 int counter = 0;
 int d = 100;
 PImage img;
+int savedTime;
+int totalTime = 1000;
+int passedTime = 0;
 
 void setup()
 {
@@ -44,6 +47,12 @@ void draw()
    square[i].change();
    square[i].show();
   }
+  passedTime = millis() - savedTime;
+  if(passedTime > totalTime) 
+  {
+    savedTime = millis();
+    clickSimulation();    
+  }
 }
 
 void mousePressed()
@@ -51,5 +60,14 @@ void mousePressed()
   for(int i=0; i<counter; i=i+1)
   {
    square[i].clicked(mouseX,mouseY);
+  }
+  savedTime = millis();
+}
+
+void clickSimulation()
+{
+  for(int i=0; i<counter; i=i+1)
+  {
+   square[i].clicked(round(random(width)),round(random(height)));
   }
 }

@@ -108,7 +108,7 @@ void draw()
   }
   pg.endDraw();
   image(pg,(width/2)-(pg.width/2),height-pg.height);  
-  println(textangle);
+  //println(textangle);
 }
 
 void showText(dcurve dc)
