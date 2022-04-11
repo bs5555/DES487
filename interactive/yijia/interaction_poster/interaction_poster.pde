@@ -2,11 +2,13 @@
 PImage monalisa;
 spot[] spots = new spot[9];
 PShape locket; 
+PShape unlocket;
 PImage yellow1;
 PImage yellow2;
 PImage yellow3;
 PImage yellow4;
 PImage yellow5;
+PImage unlockimage;
 int status = 0;
 int astatus = 0;
 
@@ -21,13 +23,13 @@ void setup()
   //frameRate(24);
   monalisa = loadImage("mona.png");
   locket = loadShape("lock1.svg");
-  
+  unlocket=loadShape("unlocket.svg");
   yellow1=loadImage("element1.png");
   yellow2=loadImage("element2.png");
   yellow3=loadImage("element3.png");
   yellow4=loadImage("element4.png");
   yellow5=loadImage("element5.png");
-  
+  unlockimage=loadImage("monalisa2.PNG");
   
   int i = 0;
   for(int y = -1; y<2; y++)
@@ -57,6 +59,10 @@ void draw()
   if(status==2 || status==3 || status==4)
   {
     lock();
+  }
+  if(status==6)
+  {
+    unlock();
   }
 }
 
@@ -107,6 +113,10 @@ void mouseClicked()
     {
       println("LOOSE");
     }
+    if (tip==win)
+    {
+      status=6;
+    }
   }
 }
 
@@ -151,6 +161,10 @@ class spot
       println(tip);
     }
   }
-  
-  
 }
+
+ void unlock()
+  {
+    
+    shape(unlocket,width/2,height-100);
+  }
