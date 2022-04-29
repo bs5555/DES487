@@ -8,29 +8,28 @@ PVector[] bg = new PVector[6];
 PVector[] vertices = new PVector[6];  // array of PVectors, one for each vertex in the polygon
 int[] exp = new int[6];               // experience points each maxed in 100
 ControlP5 cp5; //control set
-
-perk p;
+perk[] p = new perk[1000]; //character perks
+int nperk = 0;
+rules ruleset = new rules(); 
 
 void setup() {
   size(1000,800);
+  initPerks();
   cp5 = new ControlP5(this);
 
-  // set position of the vertices (here a trapezoid)
-   
+  // set position of the vertices (here a trapezoid
    vertices=hexagon(0, 0, height*0.8);
    for(int i=0; i<6; i++)
    {
-     exp[i]=floor(random(100));
-     
+     exp[i]=5;
    }
    bg=hexagon(0, 0, height*0.8);
-   cp5.addSlider("power").setPosition(10,10).setSize(140,20).setRange(1,100).setValue(exp[0]).setId(1).getCaptionLabel().align(CENTER,CENTER);
-   cp5.addSlider("speed").setPosition(10,40).setSize(140,20).setRange(1,100).setValue(exp[1]).setId(2).getCaptionLabel().align(CENTER,CENTER);
-   cp5.addSlider("dexterity").setPosition(10,70).setSize(140,20).setRange(1,100).setValue(exp[2]).setId(3).getCaptionLabel().align(CENTER,CENTER);
-   cp5.addSlider("personality").setPosition(10,100).setSize(140,20).setRange(1,100).setValue(exp[3]).setId(4).getCaptionLabel().align(CENTER,CENTER);
-   cp5.addSlider("intelligence").setPosition(10,130).setSize(140,20).setRange(1,100).setValue(exp[4]).setId(5).getCaptionLabel().align(CENTER,CENTER);
-   cp5.addSlider("endurance").setPosition(10,160).setSize(140,20).setRange(1,100).setValue(exp[5]).setId(6).getCaptionLabel().align(CENTER,CENTER);
-   p = new perk("Charm",300,300,30);
+   cp5.addSlider("power").setPosition(10,10).setNumberOfTickMarks(11).setSize(140,20).setRange(0,100).setValue(exp[0]).setId(1).getCaptionLabel().align(CENTER,CENTER);
+   cp5.addSlider("speed").setPosition(10,40).setNumberOfTickMarks(11).setSize(140,20).setRange(0,100).setValue(exp[1]).setId(2).getCaptionLabel().align(CENTER,CENTER);
+   cp5.addSlider("dexterity").setPosition(10,70).setNumberOfTickMarks(11).setSize(140,20).setRange(0,100).setValue(exp[2]).setId(3).getCaptionLabel().align(CENTER,CENTER);
+   cp5.addSlider("personality").setPosition(10,100).setNumberOfTickMarks(11).setSize(140,20).setRange(0,100).setValue(exp[3]).setId(4).getCaptionLabel().align(CENTER,CENTER);
+   cp5.addSlider("intelligence").setPosition(10,130).setNumberOfTickMarks(11).setSize(140,20).setRange(0,100).setValue(exp[4]).setId(5).getCaptionLabel().align(CENTER,CENTER);
+   cp5.addSlider("endurance").setPosition(10,160).setNumberOfTickMarks(11).setSize(140,20).setRange(0,100).setValue(exp[5]).setId(6).getCaptionLabel().align(CENTER,CENTER);
 }
 
 PVector[] hexagon(float x, float y, float tall) 
@@ -60,7 +59,7 @@ void drawHexagon(PVector[] hex,color f)
 
 void draw() {
   background(255);
-
+  
   // update circle to mouse coordinates
   cx = mouseX-(width/2);
   cy = mouseY-(height/2);
@@ -72,15 +71,10 @@ void draw() {
   pushMatrix();
   translate(width/2,height/2);
     drawHexagon(bg,color(0,0,0,50));
-    color c = 0;
-    if(hit)
+    for(int i =0; i<nperk; i++)
     {
-      c = color(255,150,0);
+      p[i].isIn();
     }
-    else 
-    {
-      c = color(0,150,255);
-    }  
    
    vertices=hexagon(0, 0, height*0.8);
    for(int i = 0; i<6; i++)
@@ -89,12 +83,13 @@ void draw() {
      vertices[i].y=vertices[i].y*(exp[i]/100.0);
    }
 
-   drawHexagon(vertices,c);
+   drawHexagon(vertices,color(255,140,0));
  
-    // draw the circle
-    fill(0, 150);
-    ellipse(cx,cy, r*2,r*2);
-    p.show();
+    for(int i =0; i<nperk; i++)
+    {
+      p[i].show();
+    }
+    
   popMatrix();
 }
 
@@ -258,17 +253,28 @@ boolean polygonPoint(PVector[] vertices, float px, float py) {
 
 void mousePressed() 
 {
-  p.clicked();
+  boolean found = false;
+  for(int i =0; i<nperk; i++)
+  {
+    found = p[i].clicked();
+    if(found) i=nperk;
+  }  
 }
 
 void mouseReleased()
 {
-  p.moved = false;
+  for(int i =0; i<nperk; i++)
+  {
+    p[i].moved = false;
+  }  
 }
 
 void mouseDragged()
 {
-  p.move();
+  for(int i =0; i<nperk; i++)
+  {
+    p[i].move();
+  }  
 }
 
 public void controlEvent(ControlEvent theEvent) 
@@ -284,3 +290,48 @@ public void controlEvent(ControlEvent theEvent)
     case 6 : exp[5] = floor(cp5.getController("endurance").getValue()); break;
   }  
 }  
+
+void initRules()
+{
+  ruleset.addRule("enemy_power_modifier",0);
+  ruleset.addRule("enemy_defence_modifier",0);
+  ruleset.addRule("enemy_damage_modifier",0);
+  ruleset.addRule("enemy_accuracy_modifier",0);
+  ruleset.addRule("enemy_dodge_modifier",0);
+  ruleset.addRule("own_power_modifier",0);
+  ruleset.addRule("own_defence_modifier",0);
+  ruleset.addRule("own_accuracy_modifier",0);
+  ruleset.addRule("own_damage_modifier",0);
+  ruleset.addRule("own_dodge_modifier",0);
+  ruleset.addRule("own_enemy_chance_modifier",0);
+  ruleset.addRule("own_enemy_cooldown_modifier",0);
+  ruleset.addRule("own_stun_chance_modifier",0);
+  ruleset.addRule("own_stun_cooldown_modifier",0);
+  ruleset.addRule("enemy_turned",0);
+  ruleset.addRule("enemy_stunned_damage_modifier",0);
+  ruleset.addRule("spell_fire",0);
+  ruleset.addRule("spell_water",0);
+  ruleset.addRule("spell_earth",0);
+  ruleset.addRule("spell_air",0);
+  ruleset.addRule("spell_fire_water",0);
+  ruleset.addRule("spell_earth_air",0);
+  ruleset.addRule("hp_modifier",0);
+  ruleset.addRule("hp_rate",0);
+  ruleset.addRule("hp_on_hit",0);
+  ruleset.addRule("acess_weapon_class_1",0);
+  ruleset.addRule("acess_weapon_class_2",0);
+  ruleset.addRule("acess_weapon_class_3",0);
+  ruleset.addRule("acess_armor_class_1",0);
+  ruleset.addRule("acess_armor_class_2",0);
+  ruleset.addRule("acess_armor_class_3",0);
+  ruleset.addRule("hit_num",0);
+  ruleset.addRule("hit_angle",0);
+}
+
+public void initPerks()
+{
+   nperk = 0;
+   p[nperk] = new perk("Charm",300,300,30).addRule("enemy_power_modifier",-20); nperk++;
+   p[nperk] = new perk("Overkill",200,300,30); nperk++;
+   
+}
